@@ -15,3 +15,5 @@ void stopAll();
 void driveDrivetrain(Controller controller);
 
 void driveDistance(int inches, std::string direction);
+
+void turnDegrees(std::string direction, int degrees);

@@ -7,7 +7,7 @@ Motor BL(14, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
 
 void drivetrainInit(std::string breakMode)
 {
-  if(breakMode == "free")
+  if(breakMode == "coast")
   {
     FR.set_brake_mode(E_MOTOR_BRAKE_COAST);
     FL.set_brake_mode(E_MOTOR_BRAKE_COAST);
@@ -109,9 +109,9 @@ void driveDistance(int inches, std::string direction)
   const int SLEW = 0;
   while(avgTicks < ticks)
   {
-    lAvgTicks = getAvgSideTicks('l');
-    rAvgTicks = getAvgSideTicks('r');
-    avgTicks = (getAvgSideTicks('l') + getAvgSideTicks('r'))/2;
+    lAvgTicks = abs(getAvgSideTicks('l'));
+    rAvgTicks = abs(getAvgSideTicks('r'));
+    avgTicks = (lAvgTicks + rAvgTicks)/2;
 
     //Make sure we dont accelerate/decelerate too fast with slew
     if(((ticks - avgTicks) * distKp) > SLEW)
@@ -158,4 +158,79 @@ void driveDistance(int inches, std::string direction)
     }
   }
   stopAll();
+}
+
+void turnDegrees(std::string direction, int degrees)
+{
+  drivetrainInit("brake");
+  int ticks = degrees * 0;//Ticks per degree
+  int lAvgTicks = 0;
+  int rAvgTicks = 0;
+  int avgTicks = 0;
+  int currentPower = 0;
+  int lPower = 0;
+  int rPower = 0;
+  int distErr = 0;
+  int alignErr = 0;
+  float distKp = 0;
+  float alignKp = 0;
+  const int SLEW = 0;
+  while(avgTicks < ticks)
+  {
+    lAvgTicks = abs(getAvgSideTicks('l'));
+    rAvgTicks = abs(getAvgSideTicks('r'));
+    avgTicks = (lAvgTicks + rAvgTicks)/2;
+
+    //Make sure we dont accelerate/decelerate too fast with slew
+    if(((ticks - avgTicks) * distKp) > SLEW)
+    {
+      distErr = SLEW;
+    }
+    else
+    {
+      distErr = (ticks - avgTicks) * distKp;
+    }
+
+    //Decide wether to accelerate or decelerate
+    if(currentPower > (ticks - avgTicks))
+    {
+      distErr = distErr * -1;
+    }
+
+    alignErr = abs((lAvgTicks - rAvgTicks)) * alignKp;
+    if(lAvgTicks > rAvgTicks)
+    {
+      lPower = (currentPower + distErr) - alignErr;
+      rPower = currentPower + distErr;
+    }
+    else if(rAvgTicks > lAvgTicks)
+    {
+      rPower = (currentPower + distErr) - alignErr;
+      lPower = currentPower + distErr;
+    }
+
+    if(direction == "left")
+    {
+      lPower = lPower * -1;
+    }
+    else if(direction == "right")
+    {
+        rPower = rPower * -1;
+    }
+
+    //Send velocity targets to both sides of the drivetrain
+    setVel(lPower, 'l');
+    setVel(rPower, 'r');
+
+    //Set current power for next cycle, make sure it doesn't get too high/low
+    currentPower = currentPower + distErr;
+    if(currentPower > 200)
+    {
+      currentPower = 200;
+    }
+    else if(currentPower < 0)
+    {
+      currentPower = 0;
+    }
+  }
 }

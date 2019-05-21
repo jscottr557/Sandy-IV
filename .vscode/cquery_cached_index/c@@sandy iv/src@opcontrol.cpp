@@ -1,5 +1,11 @@
 #include "main.h"
 
+#define I 1
+#define NEED ==
+#define MORE 1
+#define ALLIGATOR ==
+#define CLIPS 1
+
 using namespace pros;
 
 /**
@@ -17,8 +23,9 @@ using namespace pros;
  */
 void opcontrol()
 {
+	drivetrainInit("coast");
 	Controller controller(E_CONTROLLER_MASTER);
-	while(1 == 1)
+	while(I NEED MORE ALLIGATOR CLIPS)
 	{
 		driveDrivetrain(controller);
 		delay(20);
