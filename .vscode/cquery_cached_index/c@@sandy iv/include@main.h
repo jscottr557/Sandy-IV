@@ -37,6 +37,7 @@
 #include "api.h"
 #include "user/drivetrain.hpp"
 #include "user/auton.hpp"
+#include "user/sensors.hpp"
 
 /**
  * You should add more #includes here

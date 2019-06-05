@@ -10,7 +10,7 @@ void blue()
 
 }
 
-void autonSel(int autonSel)
+void decideAuton(int autonSel)
 {
-  
+
 }
