@@ -27,7 +27,7 @@ void drivetrainInit(std::string breakMode)
   BL.tare_position();
 }
 
-int getAvgSideTicks(char side)
+int getAvgDriveSideTicks(char side)
 {
   int avg = 0;
   if(side == 'l')
@@ -41,7 +41,7 @@ int getAvgSideTicks(char side)
   return avg;
 }
 
-void setPower(int power, char side)
+void setDriveSidePower(int power, char side)
 {
   if(side == 'r')
   {
@@ -55,7 +55,7 @@ void setPower(int power, char side)
   }
 }
 
-void setVel(int vel, char side)
+void setDriveSideVel(int vel, char side)
 {
   if(side == 'r')
   {
@@ -77,7 +77,7 @@ void stopAll()
   BL.move_velocity(0);
 }
 
-void driveDrivetrain(Controller controller)
+void controlDrivetrain(Controller controller)
 {
   int lPower = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y) + controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
   int rPower = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y) - controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
@@ -87,15 +87,15 @@ void driveDrivetrain(Controller controller)
   }
   else
   {
-    setPower(lPower, 'l');
-    setPower(rPower, 'r');
+    setDriveSidePower(lPower, 'l');
+    setDriveSidePower(rPower, 'r');
   }
 }
 
 void driveDistance(int inches, std::string direction)
 {
   drivetrainInit("brake");
-  int ticks = (inches/ 1/*wheelDiam*/) * 360;
+  int ticks = (inches / 4) * 360;
   int lAvgTicks = 0;
   int rAvgTicks = 0;
   int avgTicks = 0;
@@ -109,8 +109,8 @@ void driveDistance(int inches, std::string direction)
   const int SLEW = 0;
   while(avgTicks < ticks)
   {
-    lAvgTicks = abs(getAvgSideTicks('l'));
-    rAvgTicks = abs(getAvgSideTicks('r'));
+    lAvgTicks = abs(getAvgDriveSideTicks('l'));
+    rAvgTicks = abs(getAvgDriveSideTicks('r'));
     avgTicks = (lAvgTicks + rAvgTicks)/2;
 
     //Make sure we dont accelerate/decelerate too fast with slew
@@ -143,8 +143,8 @@ void driveDistance(int inches, std::string direction)
     }
 
     //Send velocity targets to both sides of the drivetrain
-    setVel(lPower, 'l');
-    setVel(rPower, 'r');
+    setDriveSideVel(lPower, 'l');
+    setDriveSideVel(rPower, 'r');
 
     //Set current power for next cycle, make sure it doesn't get too high/low
     currentPower = currentPower + distErr;
@@ -177,8 +177,8 @@ void turnDegrees(std::string direction, int degrees)
   const int SLEW = 0;
   while(avgTicks < ticks)
   {
-    lAvgTicks = abs(getAvgSideTicks('l'));
-    rAvgTicks = abs(getAvgSideTicks('r'));
+    lAvgTicks = abs(getAvgDriveSideTicks('l'));
+    rAvgTicks = abs(getAvgDriveSideTicks('r'));
     avgTicks = (lAvgTicks + rAvgTicks)/2;
 
     //Make sure we dont accelerate/decelerate too fast with slew
@@ -219,8 +219,8 @@ void turnDegrees(std::string direction, int degrees)
     }
 
     //Send velocity targets to both sides of the drivetrain
-    setVel(lPower, 'l');
-    setVel(rPower, 'r');
+    setDriveSideVel(lPower, 'l');
+    setDriveSideVel(rPower, 'r');
 
     //Set current power for next cycle, make sure it doesn't get too high/low
     currentPower = currentPower + distErr;

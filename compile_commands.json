@@ -15,7 +15,7 @@
             "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
             "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
             "-iquote./include",
-            "-iquote./include/./",
+            "-iquote./include/user/",
             "-mcpu=cortex-a9",
             "-mfpu=neon-fp16",
             "-mfloat-abi=softfp",
@@ -28,11 +28,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "C:/Users/CPHSVE~1/AppData/Local/Temp/tmpaaeekoyx/initialize.cpp.o",
-            "src\\initialize.cpp"
+            "C:/Users/CPHSVE~1/AppData/Local/Temp/tmpj259nj9s/user/drivetrain.cpp.o",
+            "src\\user\\drivetrain.cpp"
         ],
         "directory": "C:\\Sandy IV",
-        "file": "src\\initialize.cpp"
+        "file": "src\\user\\drivetrain.cpp"
     },
     {
         "arguments": [
@@ -63,11 +63,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "C:/Users/CPHSVE~1/AppData/Local/Temp/tmpaaeekoyx/user/auton.cpp.o",
-            "src\\user\\auton.cpp"
+            "C:/Users/CPHSVE~1/AppData/Local/Temp/tmpj259nj9s/user/dr4b.cpp.o",
+            "src\\user\\dr4b.cpp"
         ],
         "directory": "C:\\Sandy IV",
-        "file": "src\\user\\auton.cpp"
+        "file": "src\\user\\dr4b.cpp"
     },
     {
         "arguments": [
@@ -98,7 +98,7 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "C:/Users/CPHSVE~1/AppData/Local/Temp/tmpaaeekoyx/opcontrol.cpp.o",
+            "C:/Users/CPHSVE~1/AppData/Local/Temp/tmpj259nj9s/opcontrol.cpp.o",
             "src\\opcontrol.cpp"
         ],
         "directory": "C:\\Sandy IV",
@@ -133,11 +133,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "C:/Users/CPHSVE~1/AppData/Local/Temp/tmpaaeekoyx/user/drivetrain.cpp.o",
-            "src\\user\\drivetrain.cpp"
+            "C:/Users/CPHSVE~1/AppData/Local/Temp/tmpj259nj9s/user/auton.cpp.o",
+            "src\\user\\auton.cpp"
         ],
         "directory": "C:\\Sandy IV",
-        "file": "src\\user\\drivetrain.cpp"
+        "file": "src\\user\\auton.cpp"
     },
     {
         "arguments": [
@@ -168,10 +168,80 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "C:/Users/CPHSVE~1/AppData/Local/Temp/tmpaaeekoyx/autonomous.cpp.o",
+            "C:/Users/CPHSVE~1/AppData/Local/Temp/tmpj259nj9s/autonomous.cpp.o",
             "src\\autonomous.cpp"
         ],
         "directory": "C:\\Sandy IV",
         "file": "src\\autonomous.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-target",
+            "armv7ar-none-none-eabi",
+            "-fno-ms-extensions",
+            "-fno-ms-compatibility",
+            "-fno-delayed-template-parsing",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
+            "-iquote./include",
+            "-iquote./include/user/",
+            "-mcpu=cortex-a9",
+            "-mfpu=neon-fp16",
+            "-mfloat-abi=softfp",
+            "-D_POSIX_THREADS",
+            "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
+            "-Os",
+            "-funwind-tables",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-fdiagnostics-color",
+            "--std=gnu++17",
+            "-o",
+            "C:/Users/CPHSVE~1/AppData/Local/Temp/tmpj259nj9s/user/sensors.cpp.o",
+            "src\\user\\sensors.cpp"
+        ],
+        "directory": "C:\\Sandy IV",
+        "file": "src\\user\\sensors.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-target",
+            "armv7ar-none-none-eabi",
+            "-fno-ms-extensions",
+            "-fno-ms-compatibility",
+            "-fno-delayed-template-parsing",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
+            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
+            "-iquote./include",
+            "-iquote./include/./",
+            "-mcpu=cortex-a9",
+            "-mfpu=neon-fp16",
+            "-mfloat-abi=softfp",
+            "-D_POSIX_THREADS",
+            "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
+            "-Os",
+            "-funwind-tables",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-fdiagnostics-color",
+            "--std=gnu++17",
+            "-o",
+            "C:/Users/CPHSVE~1/AppData/Local/Temp/tmpj259nj9s/initialize.cpp.o",
+            "src\\initialize.cpp"
+        ],
+        "directory": "C:\\Sandy IV",
+        "file": "src\\initialize.cpp"
     }
 ]

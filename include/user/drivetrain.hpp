@@ -4,15 +4,15 @@ using namespace pros;
 
 void drivetrainInit(std::string breakMode);
 
-int getAvgSideTicks(char side);
+int getAvgDriveSideTicks(char side);
 
-void setPower(int power, char side);
+void setDriveSidePower(int power, char side);
 
-void setVel(int vel, char side);
+void setDriveSideVel(int vel, char side);
 
 void stopAll();
 
-void driveDrivetrain(Controller controller);
+void controlDrivetrain(Controller controller);
 
 void driveDistance(int inches, std::string direction);
 

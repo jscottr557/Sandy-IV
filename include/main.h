@@ -38,6 +38,7 @@
 #include "user/drivetrain.hpp"
 #include "user/auton.hpp"
 #include "user/sensors.hpp"
+#include "user/dr4b.hpp"
 
 /**
  * You should add more #includes here
