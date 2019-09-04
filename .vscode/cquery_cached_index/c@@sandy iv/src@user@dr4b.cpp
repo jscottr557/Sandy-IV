@@ -51,7 +51,8 @@ void moveLiftTo(int pos)
   int alignErr = 0;
   int lPower = 0;
   int rPower = 0;
-  while(avgPos < pos)
+
+  while(avgPos != pos)
   {
     avgPos = getAvgLiftPos();
     distErr = pos - avgPos;

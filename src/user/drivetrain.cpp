@@ -5,21 +5,28 @@ Motor FL(15, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
 Motor BR(17, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
 Motor BL(14, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
 
-void drivetrainInit(std::string breakMode)
+void drivetrainInit(std::string brakeMode)
 {
-  if(breakMode == "coast")
+  if(brakeMode == "coast")
   {
     FR.set_brake_mode(E_MOTOR_BRAKE_COAST);
     FL.set_brake_mode(E_MOTOR_BRAKE_COAST);
     BR.set_brake_mode(E_MOTOR_BRAKE_COAST);
     BL.set_brake_mode(E_MOTOR_BRAKE_COAST);
   }
-  if(breakMode == "brake")
+  else if(brakeMode == "brake")
   {
     FR.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
     FL.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
     BR.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
     BL.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+  }
+  else if(brakeMode == "hold")
+  {
+    FR.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+    FL.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+    BR.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+    BL.set_brake_mode(E_MOTOR_BRAKE_HOLD);
   }
   FR.tare_position();
   FL.tare_position();
@@ -114,13 +121,10 @@ void driveDistance(int inches, std::string direction)
     avgTicks = (lAvgTicks + rAvgTicks)/2;
 
     //Make sure we dont accelerate/decelerate too fast with slew
-    if(((ticks - avgTicks) * distKp) > SLEW)
+    distErr = (ticks - avgTicks) * distKp;
+    if(distErr > SLEW)
     {
       distErr = SLEW;
-    }
-    else
-    {
-      distErr = (ticks - avgTicks) * distKp;
     }
 
     //Decide wether to accelerate or decelerate
@@ -129,7 +133,7 @@ void driveDistance(int inches, std::string direction)
       distErr = distErr * -1;
     }
 
-    //Decide which side is too far ahead, apply acceleration curve
+    //Decide which side is too far ahead, apply alignment and speed corretions
     alignErr = abs((lAvgTicks - rAvgTicks)) * alignKp;
     if(lAvgTicks > rAvgTicks)
     {
@@ -142,11 +146,20 @@ void driveDistance(int inches, std::string direction)
       lPower = currentPower + distErr;
     }
 
+    //Check what direction we should go, change motor velocities accordingly
+    if(direction == "backward")
+    {
+      lPower = lPower * -1;
+      rPower = rPower * -1;
+    }
+
     //Send velocity targets to both sides of the drivetrain
     setDriveSideVel(lPower, 'l');
     setDriveSideVel(rPower, 'r');
 
     //Set current power for next cycle, make sure it doesn't get too high/low
+    /*As a side note, the distance(in ticks) at which deceleration starts is
+      determined by the upper limit on currentPower*/
     currentPower = currentPower + distErr;
     if(currentPower > 200)
     {
@@ -160,7 +173,7 @@ void driveDistance(int inches, std::string direction)
   stopAll();
 }
 
-void turnDegrees(std::string direction, int degrees)
+void turnDegrees(int degrees, std::string direction)
 {
   drivetrainInit("brake");
   int ticks = degrees * 0;//Ticks per degree
@@ -182,13 +195,10 @@ void turnDegrees(std::string direction, int degrees)
     avgTicks = (lAvgTicks + rAvgTicks)/2;
 
     //Make sure we dont accelerate/decelerate too fast with slew
-    if(((ticks - avgTicks) * distKp) > SLEW)
+    distErr = (ticks - avgTicks) * distKp;
+    if(distErr > SLEW)
     {
       distErr = SLEW;
-    }
-    else
-    {
-      distErr = (ticks - avgTicks) * distKp;
     }
 
     //Decide wether to accelerate or decelerate
@@ -197,6 +207,7 @@ void turnDegrees(std::string direction, int degrees)
       distErr = distErr * -1;
     }
 
+    //Decide which side is too far ahead, apply alignment and speed corretions
     alignErr = abs((lAvgTicks - rAvgTicks)) * alignKp;
     if(lAvgTicks > rAvgTicks)
     {
@@ -209,13 +220,14 @@ void turnDegrees(std::string direction, int degrees)
       lPower = currentPower + distErr;
     }
 
+    //Check to see what direction to turn, adjust motor power accordingly
     if(direction == "left")
     {
       lPower = lPower * -1;
     }
     else if(direction == "right")
     {
-        rPower = rPower * -1;
+      rPower = rPower * -1;
     }
 
     //Send velocity targets to both sides of the drivetrain
@@ -223,6 +235,8 @@ void turnDegrees(std::string direction, int degrees)
     setDriveSideVel(rPower, 'r');
 
     //Set current power for next cycle, make sure it doesn't get too high/low
+    /*As a side note, the distance(in ticks) at which deceleration starts is
+      determined by the upper limit on currentPower*/
     currentPower = currentPower + distErr;
     if(currentPower > 200)
     {

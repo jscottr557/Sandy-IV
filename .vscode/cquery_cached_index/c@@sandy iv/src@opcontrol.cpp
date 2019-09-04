@@ -21,7 +21,8 @@ void opcontrol()
 	Controller controller(E_CONTROLLER_MASTER);
 	while(1)
 	{
-		driveDrivetrain(controller);
+		controlDrivetrain(controller);
+		controlLift(controller);
 		delay(20);
 	}
 }
