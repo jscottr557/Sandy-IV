@@ -3,7 +3,7 @@
 using namespace pros;
 
 //CLear the encoders on the lift motors, set them to hold their position
-void liftInit();
+void initLift();
 
 //Get the average position of the lift motor encoders
 int getAvgLiftPos();

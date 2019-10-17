@@ -2,11 +2,11 @@
 
 //Motor FR(19, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
 //Motor FL(15, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
-Motor BR(17, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
-Motor BL(14, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
-Motor strafe(15, E_MOTOR_GEARSET_36, E_MOTOR_ENCODER_DEGREES);
+Motor BR(1, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
+Motor BL(2, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
+Motor strafe(3, E_MOTOR_GEARSET_36, E_MOTOR_ENCODER_DEGREES);
 
-void drivetrainInit(std::string brakeMode)
+void initDrivetrain(std::string brakeMode)
 {
   if(brakeMode == "coast")
   {
@@ -124,7 +124,7 @@ void controlDrivetrain(Controller controller)
 
 void driveInches(int inches, std::string direction)
 {
-  drivetrainInit("brake");
+  initDrivetrain("brake");
   int target = (inches / (4 * M_PI)) * 360;
   int lAvgTicks = 0;
   int rAvgTicks = 0;
@@ -136,7 +136,7 @@ void driveInches(int inches, std::string direction)
   int alignErr = 0;
   float distKp = 0;
   float alignKp = 0;
-  const float SLEW = 0;//This just so happens to also be the acceleration
+  const float SLEW = 0;//AKA the acceleration in rpm/cycle
   while(avgTicks < target)
   {
     lAvgTicks = abs(getAvgDriveSideTicks('l'));
@@ -199,7 +199,7 @@ void driveInches(int inches, std::string direction)
 
 void turnDegrees(int degrees, std::string direction)
 {
-  drivetrainInit("brake");
+  initDrivetrain("brake");
   int target = degrees * 0;//Ticks per degree
   int lAvgTicks = 0;
   int rAvgTicks = 0;
@@ -275,7 +275,7 @@ void turnDegrees(int degrees, std::string direction)
 
 void strafeInches(int inches, char direction)
 {
-  drivetrainInit("brake");
+  initDrivetrain("brake");
   int target = (inches / (4 * M_PI));
   int ticks = 0;
   int lAvgTicks = 0;

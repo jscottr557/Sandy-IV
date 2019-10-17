@@ -4,7 +4,7 @@ using namespace pros;
 
 //CLear the encoders on the drive motors, set how they brake
 //Args for brakeMode are "coast", "brake", and "hold"
-void drivetrainInit(std::string breakMode);
+void initDrivetrain(std::string breakMode);
 
 //Get the average number of ticks on a side of the drivetrain
 //Args for side are a lowercase 'l', and 'r'

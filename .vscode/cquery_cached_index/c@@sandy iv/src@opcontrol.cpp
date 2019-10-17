@@ -17,7 +17,7 @@ using namespace pros;
  */
 void opcontrol()
 {
-	drivetrainInit("coast");
+	initDrivetrain("coast");
 	Controller controller(E_CONTROLLER_MASTER);
 	while(1)
 	{

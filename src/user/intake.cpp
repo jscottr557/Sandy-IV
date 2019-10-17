@@ -5,8 +5,8 @@ Motor intakeR(13, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
 
 void initIntake()
 {
-  intakeL.set_brake_mode(E_MOTOR_BRAKE_COAST);
-  intakeR.set_brake_mode(E_MOTOR_BRAKE_COAST);
+  intakeL.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+  intakeR.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
 
   intakeL.tare_position();
   intakeR.tare_position();

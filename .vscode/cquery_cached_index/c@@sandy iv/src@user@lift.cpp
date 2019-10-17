@@ -4,7 +4,7 @@
 Motor liftR(0, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
 Motor liftL(1, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
 
-void liftInit()
+void initLift()
 {
   liftR.tare_position();
   liftL.tare_position();
