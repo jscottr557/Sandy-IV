@@ -18,11 +18,18 @@ using namespace pros;
 void opcontrol()
 {
 	initDrivetrain("coast");
+	initLift();
+	initTray();
+	initIntake();
+
 	Controller controller(E_CONTROLLER_MASTER);
+
 	while(1)
 	{
 		controlDrivetrain(controller);
 		controlLift(controller);
+		controlIntake(controller);
+		controlTray(controller);
 		delay(20);
 	}
 }

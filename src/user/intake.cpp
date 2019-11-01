@@ -1,7 +1,7 @@
 #include "user/intake.hpp"
 
-Motor intakeL(12, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
-Motor intakeR(13, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
+Motor intakeL(8, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
+Motor intakeR(9, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
 
 void initIntake()
 {
@@ -33,19 +33,19 @@ void setIntake(std::string state)
 
 void controlIntake(Controller controller)
 {
-  if(controller.get_digital(E_CONTROLLER_DIGITAL_R1))
+  if(controller.get_digital(E_CONTROLLER_DIGITAL_L1))
   {
     setIntake("in");
   }
-  else if(controller.get_digital(E_CONTROLLER_DIGITAL_R2))
+  else if(controller.get_digital(E_CONTROLLER_DIGITAL_L2))
   {
     setIntake("out");
   }
-  else if(controller.get_digital(E_CONTROLLER_DIGITAL_R1) == 0)
+  else if(controller.get_digital(E_CONTROLLER_DIGITAL_L1) == 0)
   {
     setIntake("off");
   }
-  else if(controller.get_digital(E_CONTROLLER_DIGITAL_R2) == 0)
+  else if(controller.get_digital(E_CONTROLLER_DIGITAL_L2) == 0)
   {
     setIntake("off");
   }

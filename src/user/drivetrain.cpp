@@ -4,7 +4,7 @@
 //Motor FL(15, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
 Motor BR(1, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
 Motor BL(2, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
-Motor strafe(3, E_MOTOR_GEARSET_36, E_MOTOR_ENCODER_DEGREES);
+Motor strafe(3, E_MOTOR_GEARSET_36, 0, E_MOTOR_ENCODER_DEGREES);
 
 void initDrivetrain(std::string brakeMode)
 {
@@ -37,6 +37,7 @@ void initDrivetrain(std::string brakeMode)
   BR.tare_position();
   BL.tare_position();
   strafe.tare_position();
+  return;
 }
 
 int getAvgDriveSideTicks(char side)
@@ -70,11 +71,13 @@ void setDriveSidePower(int power, char side)
     //FL.move(power);
     BL.move(power);
   }
+  return;
 }
 
 void setStrafePower(int power)
 {
   strafe.move(power);
+  return;
 }
 
 void setDriveSideVel(int vel, char side)
@@ -89,11 +92,13 @@ void setDriveSideVel(int vel, char side)
     //FL.move_velocity(vel);
     BL.move_velocity(vel);
   }
+  return;
 }
 
 void setStrafeVel(int vel)
 {
   strafe.move_velocity(vel);
+  return;
 }
 
 void stopAll()
@@ -103,6 +108,7 @@ void stopAll()
   BR.move_velocity(0);
   BL.move_velocity(0);
   strafe.move_velocity(0);
+  return;
 }
 
 void controlDrivetrain(Controller controller)
@@ -120,6 +126,7 @@ void controlDrivetrain(Controller controller)
     setDriveSidePower(rPower, 'r');
     setStrafePower(sPower);
   }
+  return;
 }
 
 void driveInches(int inches, std::string direction)
@@ -134,9 +141,9 @@ void driveInches(int inches, std::string direction)
   int rPower = 0;
   int distErr = 0;
   int alignErr = 0;
-  float distKp = 0;
-  float alignKp = 0;
-  const float SLEW = 0;//AKA the acceleration in rpm/cycle
+  float distKp = 0.15;
+  float alignKp = 0.15;
+  const float SLEW = .35;//AKA the acceleration in rpm/cycle
   while(avgTicks < target)
   {
     lAvgTicks = abs(getAvgDriveSideTicks('l'));
@@ -192,9 +199,9 @@ void driveInches(int inches, std::string direction)
     {
       currentPower = 0;
     }
-    delay(1);
   }
   stopAll();
+  return;
 }
 
 void turnDegrees(int degrees, std::string direction)
@@ -271,6 +278,8 @@ void turnDegrees(int degrees, std::string direction)
       currentPower = 0;
     }
   }
+  stopAll();
+  return;
 }
 
 void strafeInches(int inches, char direction)
@@ -321,4 +330,6 @@ void strafeInches(int inches, char direction)
       currentPower = 0;
     }
   }
+  stopAll();
+  return;
 }

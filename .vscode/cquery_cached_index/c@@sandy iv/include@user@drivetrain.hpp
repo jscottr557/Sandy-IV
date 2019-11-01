@@ -41,5 +41,5 @@ void driveInches(int inches, std::string direction);
 void turnDegrees(int degrees, std::string direction);
 
 //Strafe the drivetrain left or right a number of inches
-//Arags for direction are a lowercase 'l', and 'r'
+//Args for direction are a lowercase 'l', and 'r'
 void strafeInches(int inches, char direction);

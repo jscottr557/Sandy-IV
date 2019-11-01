@@ -1,16 +1,16 @@
 #include "user/lift.hpp"
 
 //TODO: make sure the ports are set correctly once
-Motor liftR(0, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
-Motor liftL(1, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
+Motor liftR(7, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
+Motor liftL(6, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
 
 void initLift()
 {
   liftR.tare_position();
   liftL.tare_position();
 
-  liftR.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
-  liftL.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+  liftR.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+  liftL.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 }
 
 int getAvgLiftPos()

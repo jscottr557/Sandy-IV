@@ -40,6 +40,7 @@
 #include "user/sensors.hpp"
 #include "user/lift.hpp"
 #include "user/intake.hpp"
+#include "user/tray.hpp"
 
 /**
  * You should add more #includes here

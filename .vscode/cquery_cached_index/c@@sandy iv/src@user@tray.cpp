@@ -1,10 +1,10 @@
 #include "tray.hpp"
 
-Motor tray(10, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
+Motor tray(4, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
 
 void initTray()
 {
-  tray.set_brake_mode(E_MOTOR_BRAKE_COAST);
+  tray.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 
   tray.tare_position();
   return;
@@ -34,21 +34,21 @@ void moveTrayTo(int pos)
 
 void controlTray(Controller controller)
 {
-  /*if(controller.get_digital())
+  if(controller.get_digital(E_CONTROLLER_DIGITAL_X))
   {
-    setTrayPower(127);
+    setTrayPower(-100);
   }
-  else if(controller.get_digital())
+  else if(controller.get_digital(E_CONTROLLER_DIGITAL_B))
   {
-    setTrayPower(-127)
+    setTrayPower(100);
   }
-  else if(controller.get_digital() == 0)
+  else if(controller.get_digital(E_CONTROLLER_DIGITAL_X) == 0)
   {
     setTrayPower(0);
   }
-  else if(controller.get_digital() == 0)
+  else if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_B) == 0)
   {
     setTrayPower(0);
-  }*/
+  }
   return;
 }
