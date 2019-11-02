@@ -1,15 +1,24 @@
 #include "user/auton.hpp"
+#include "main.h"
 
 void autonRed()
 {
-
-  return;
+  strafeInches(3, 'r');
+  driveInches(24, "forward");
+  setIntake("out");
+  delay(200);
+  setIntake("off");
+  driveInches(10, "backward");
 }
 
 void autonBlue()
 {
-
-  return;
+  strafeInches(3, 'l');
+  driveInches(24, "forward");
+  setIntake("out");
+  delay(200);
+  setIntake("off");
+  driveInches(10, "backward");
 }
 
 void decideAuton(int autonSel)
@@ -24,11 +33,11 @@ void decideAuton(int autonSel)
   }
   else if(autonSel >= 2000 && autonSel < 3000)
   {
-    ;
+    autonRed();
   }
   else if(autonSel >= 3000 && autonSel <= 4095)
   {
-    ;
+    autonBlue();
   }
   return;
 }

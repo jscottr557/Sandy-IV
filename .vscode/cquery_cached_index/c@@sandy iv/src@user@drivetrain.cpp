@@ -175,6 +175,11 @@ void driveInches(int inches, std::string direction)
       rPower = (currentPower + distErr) - alignErr;
       lPower = currentPower + distErr;
     }
+    else
+    {
+      lPower = currentPower + distErr;
+      rPower = currentPower + distErr;
+    }
 
     //Check what direction we should go, change motor velocities accordingly
     if(direction == "backward")
@@ -216,9 +221,9 @@ void turnDegrees(int degrees, std::string direction)
   int rPower = 0;
   int distErr = 0;
   int alignErr = 0;
-  float distKp = 0;
-  float alignKp = 0;
-  const int SLEW = 0;
+  float distKp = .15;
+  float alignKp = .15;
+  const float SLEW = .35;
   while(avgTicks < target)
   {
     lAvgTicks = abs(getAvgDriveSideTicks('l'));
@@ -248,6 +253,11 @@ void turnDegrees(int degrees, std::string direction)
     else if(rAvgTicks > lAvgTicks)
     {
       rPower = (currentPower + distErr) - alignErr;
+      lPower = currentPower + distErr;
+    }
+    else
+    {
+      rPower = currentPower + distErr;
       lPower = currentPower + distErr;
     }
 
@@ -293,9 +303,9 @@ void strafeInches(int inches, char direction)
   int power = 0;
   int distErr = 0;
   int alignErr = 0;
-  float distKp = 0;
-  float alignKp = 0;
-  const int SLEW = 0;
+  float distKp = .15;
+  float alignKp = .15;
+  const float SLEW = .35;
   while(ticks < target)
   {
     ticks = abs(getStrafeTicks());

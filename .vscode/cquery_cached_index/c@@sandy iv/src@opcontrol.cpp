@@ -17,19 +17,29 @@ using namespace pros;
  */
 void opcontrol()
 {
+	//Initilize the subsystems
 	initDrivetrain("coast");
 	initLift();
 	initTray();
 	initIntake();
 
+	//Initilize the LCD emulator
+	lcd::initialize();
+
+	//Initilize the controller
 	Controller controller(E_CONTROLLER_MASTER);
 
 	while(1)
 	{
+		lcd::print(1, "%d", getSelVal());
 		controlDrivetrain(controller);
 		controlLift(controller);
 		controlIntake(controller);
 		controlTray(controller);
 		delay(20);
+		if(controller.get_digital(DIGITAL_Y) && controller.get_digital(DIGITAL_A))
+		{
+			decideAuton(getSelVal());
+		}
 	}
 }

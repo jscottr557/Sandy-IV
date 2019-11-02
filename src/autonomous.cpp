@@ -14,5 +14,4 @@
 void autonomous()
 {
   decideAuton(getSelVal());
-  return;
 }

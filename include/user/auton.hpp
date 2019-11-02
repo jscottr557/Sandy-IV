@@ -1,7 +1,7 @@
 #include "api.h"
 
-void red();
+void autonRed();
 
-void blue();
+void autonBlue();
 
 void decideAuton(int autonSel);
