@@ -1,39 +1,39 @@
 #include "user/drivetrain.hpp"
 
-//Motor FR(19, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
-//Motor FL(15, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
-Motor BR(1, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
-Motor BL(2, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
-Motor strafe(3, E_MOTOR_GEARSET_36, 0, E_MOTOR_ENCODER_DEGREES);
+Motor FR(1, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
+Motor FL(2, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
+Motor BR(3, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
+Motor BL(4, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
+Motor strafe(5, E_MOTOR_GEARSET_36, 0, E_MOTOR_ENCODER_DEGREES);
 
 void initDrivetrain(std::string brakeMode)
 {
   if(brakeMode == "coast")
   {
-    //FR.set_brake_mode(E_MOTOR_BRAKE_COAST);
-    //FL.set_brake_mode(E_MOTOR_BRAKE_COAST);
+    FR.set_brake_mode(E_MOTOR_BRAKE_COAST);
+    FL.set_brake_mode(E_MOTOR_BRAKE_COAST);
     BR.set_brake_mode(E_MOTOR_BRAKE_COAST);
     BL.set_brake_mode(E_MOTOR_BRAKE_COAST);
     strafe.set_brake_mode(E_MOTOR_BRAKE_COAST);
   }
   else if(brakeMode == "brake")
   {
-    //FR.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
-    //FL.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+    FR.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+    FL.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
     BR.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
     BL.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
     strafe.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
   }
   else if(brakeMode == "hold")
   {
-    //FR.set_brake_mode(E_MOTOR_BRAKE_HOLD);
-    //FL.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+    FR.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+    FL.set_brake_mode(E_MOTOR_BRAKE_HOLD);
     BR.set_brake_mode(E_MOTOR_BRAKE_HOLD);
     BL.set_brake_mode(E_MOTOR_BRAKE_HOLD);
     strafe.set_brake_mode(E_MOTOR_BRAKE_HOLD);
   }
-  //FR.tare_position();
-  //FL.tare_position();
+  FR.tare_position();
+  FL.tare_position();
   BR.tare_position();
   BL.tare_position();
   strafe.tare_position();
@@ -45,11 +45,11 @@ int getAvgDriveSideTicks(char side)
   int avg = 0;
   if(side == 'l')
   {
-    avg = /*(FL.get_position() + */BL.get_position();//)/2;
+    avg = (FL.get_position() + BL.get_position())/2;
   }
   else if(side == 'r')
   {
-    avg = /*(FR.get_position() + */BR.get_position();//)/2;
+    avg = (FR.get_position() + BR.get_position())/2;
   }
   return avg;
 }
@@ -63,12 +63,12 @@ void setDriveSidePower(int power, char side)
 {
   if(side == 'r')
   {
-    //FR.move(power);
+    FR.move(power);
     BR.move(power);
   }
   else if(side == 'l')
   {
-    //FL.move(power);
+    FL.move(power);
     BL.move(power);
   }
   return;
@@ -84,12 +84,12 @@ void setDriveSideVel(int vel, char side)
 {
   if(side == 'r')
   {
-    //FR.move_velocity(vel);
+    FR.move_velocity(vel);
     BR.move_velocity(vel);
   }
   else if(side == 'l')
   {
-    //FL.move_velocity(vel);
+    FL.move_velocity(vel);
     BL.move_velocity(vel);
   }
   return;
@@ -103,8 +103,8 @@ void setStrafeVel(int vel)
 
 void stopAll()
 {
-  //FR.move_velocity(0);
-  //FL.move_velocity(0);
+  FR.move_velocity(0);
+  FL.move_velocity(0);
   BR.move_velocity(0);
   BL.move_velocity(0);
   strafe.move_velocity(0);
@@ -136,11 +136,11 @@ void driveInches(int inches, std::string direction)
   int lAvgTicks = 0;
   int rAvgTicks = 0;
   int avgTicks = 0;
-  int currentPower = 0;
-  int lPower = 0;
-  int rPower = 0;
-  int distErr = 0;
-  int alignErr = 0;
+  float currentPower = 0;
+  float lPower = 0;
+  float rPower = 0;
+  float distErr = 0;
+  float alignErr = 0;
   float distKp = 0.15;
   float alignKp = 0.15;
   const float SLEW = .35;//AKA the acceleration in rpm/cycle
@@ -216,11 +216,11 @@ void turnDegrees(int degrees, std::string direction)
   int lAvgTicks = 0;
   int rAvgTicks = 0;
   int avgTicks = 0;
-  int currentPower = 0;
-  int lPower = 0;
-  int rPower = 0;
-  int distErr = 0;
-  int alignErr = 0;
+  float currentPower = 0;
+  float lPower = 0;
+  float rPower = 0;
+  float distErr = 0;
+  float alignErr = 0;
   float distKp = .15;
   float alignKp = .15;
   const float SLEW = .35;
@@ -299,18 +299,16 @@ void strafeInches(int inches, char direction)
   int ticks = 0;
   int lAvgTicks = 0;
   int rAvgTicks = 0;
-  int currentPower = 0;
-  int power = 0;
-  int distErr = 0;
-  int alignErr = 0;
+  float currentPower = 0;
+  float power = 0;
+  float distErr = 0;
+  float alignErr = 0;
   float distKp = .15;
   float alignKp = .15;
   const float SLEW = .35;
   while(ticks < target)
   {
     ticks = abs(getStrafeTicks());
-    lAvgTicks = abs(getAvgDriveSideTicks('l'));
-    rAvgTicks = abs(getAvgDriveSideTicks('r'));
 
     distErr = (target - ticks) * distKp;
 
@@ -329,6 +327,8 @@ void strafeInches(int inches, char direction)
     {
       power = power * -1;
     }
+
+    setStrafeVel(power);
 
     currentPower = currentPower + distErr;
     if(currentPower > 200)

@@ -1,27 +1,27 @@
 #include "user/lift.hpp"
 
 //TODO: make sure the ports are set correctly once
-Motor liftR(7, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
-Motor liftL(6, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
+Motor lift(7, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
+//Motor //lift(6, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
 
 void initLift()
 {
-  liftR.tare_position();
-  liftL.tare_position();
+  lift.tare_position();
+  //lift.tare_position();
 
-  liftR.set_brake_mode(E_MOTOR_BRAKE_HOLD);
-  liftL.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+  lift.set_brake_mode(E_MOTOR_BRAKE_HOLD);
+  //lift.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 }
 
 int getAvgLiftPos()
 {
-  return (fabs(liftL.get_position()) + fabs(liftR.get_position()))/2;
+  return /*(fabs(//lift.get_position()) +*/ fabs(lift.get_position());//)/2;
 }
 
 void moveLiftPower(int power)
 {
-  liftR.move(power);
-  liftL.move(power);
+  lift.move(power);
+  //lift.move(power);
 }
 
 void controlLift(Controller controller)
@@ -48,28 +48,15 @@ void moveLiftTo(int pos)
 {
   int avgPos = 0;
   int distErr = 0;
-  int alignErr = 0;
-  int lPower = 0;
-  int rPower = 0;
+  int power = 0;
 
   while(avgPos != pos)
   {
     avgPos = getAvgLiftPos();
     distErr = pos - avgPos;
-    alignErr = fabs(liftL.get_position() - liftR.get_position());
 
-    if(fabs(liftL.get_position()) > fabs(liftR.get_position()))
-    {
-      lPower = distErr - alignErr;
-      rPower = distErr;
-    }
-    else if(fabs(liftR.get_position()) > fabs(liftL.get_position()))
-    {
-      rPower = distErr - alignErr;
-      lPower = distErr;
-    }
+    power = distErr;
 
-    liftL.move_velocity(lPower);
-    liftR.move_velocity(rPower);
+    lift.move_velocity(power);
   }
 }

@@ -1,6 +1,6 @@
 #include "tray.hpp"
 
-Motor tray(4, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
+Motor tray(10, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
 
 void initTray()
 {

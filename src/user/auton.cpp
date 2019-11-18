@@ -3,22 +3,22 @@
 
 void autonRed()
 {
-  strafeInches(3, 'r');
+  //strafeInches(3, 'r');
   driveInches(24, "forward");
-  setIntake("out");
+  //setIntake("out");
   delay(200);
   setIntake("off");
-  driveInches(10, "backward");
+  driveInches(40, "backward");
 }
 
 void autonBlue()
 {
-  strafeInches(3, 'l');
+  //strafeInches(3, 'l');
   driveInches(24, "forward");
-  setIntake("out");
+  //setIntake("out");
   delay(200);
   setIntake("off");
-  driveInches(10, "backward");
+  driveInches(40, "backward");
 }
 
 void decideAuton(int autonSel)
