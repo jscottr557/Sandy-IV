@@ -6,6 +6,14 @@ Motor BR(3, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
 Motor BL(4, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
 Motor strafe(5, E_MOTOR_GEARSET_36, 0, E_MOTOR_ENCODER_DEGREES);
 
+struct driveConstants
+{
+  double velocKp;
+  double alignKp;
+  double turnKp;
+  double SLEW;
+};
+
 void initDrivetrain(std::string brakeMode)
 {
   if(brakeMode == "coast")
@@ -54,10 +62,6 @@ int getAvgDriveSideTicks(char side)
   return avg;
 }
 
-int getStrafeTicks()
-{
-  return strafe.get_position(); //- is right, + is left
-}
 
 void setDriveSidePower(int power, char side)
 {
@@ -71,12 +75,6 @@ void setDriveSidePower(int power, char side)
     FL.move(power);
     BL.move(power);
   }
-  return;
-}
-
-void setStrafePower(int power)
-{
-  strafe.move(power);
   return;
 }
 
@@ -95,12 +93,6 @@ void setDriveSideVel(int vel, char side)
   return;
 }
 
-void setStrafeVel(int vel)
-{
-  strafe.move_velocity(vel);
-  return;
-}
-
 void stopAll()
 {
   FR.move_velocity(0);
@@ -115,8 +107,7 @@ void controlDrivetrain(Controller controller)
 {
   int lPower = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y) + controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
   int rPower = controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y) - controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X);
-  int sPower = controller.get_analog(E_CONTROLLER_ANALOG_LEFT_X);
-  if(abs(controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y)) < 5 && abs(controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X)) < 5 && abs(sPower) < 5)
+  if(abs(controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y)) < 5 && abs(controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X)) < 5)
   {
     stopAll();
   }
@@ -124,7 +115,6 @@ void controlDrivetrain(Controller controller)
   {
     setDriveSidePower(lPower, 'l');
     setDriveSidePower(rPower, 'r');
-    setStrafePower(sPower);
   }
   return;
 }
@@ -278,58 +268,6 @@ void turnDegrees(int degrees, std::string direction)
     //Set current power for next cycle, make sure it doesn't get too high/low
     /*As a side note, the distance(in ticks) at which deceleration starts is
       determined by the upper limit on currentPower*/
-    currentPower = currentPower + distErr;
-    if(currentPower > 200)
-    {
-      currentPower = 200;
-    }
-    else if(currentPower < 0)
-    {
-      currentPower = 0;
-    }
-  }
-  stopAll();
-  return;
-}
-
-void strafeInches(int inches, char direction)
-{
-  initDrivetrain("brake");
-  int target = (inches / (4 * M_PI));
-  int ticks = 0;
-  int lAvgTicks = 0;
-  int rAvgTicks = 0;
-  float currentPower = 0;
-  float power = 0;
-  float distErr = 0;
-  float alignErr = 0;
-  float distKp = .15;
-  float alignKp = .15;
-  const float SLEW = .35;
-  while(ticks < target)
-  {
-    ticks = abs(getStrafeTicks());
-
-    distErr = (target - ticks) * distKp;
-
-    if(distErr > SLEW)
-    {
-      distErr = SLEW;
-    }
-
-    if(currentPower > (target -ticks))
-    {
-      distErr = distErr * -1;
-    }
-
-    power = currentPower + distErr;
-    if(direction == 'l')
-    {
-      power = power * -1;
-    }
-
-    setStrafeVel(power);
-
     currentPower = currentPower + distErr;
     if(currentPower > 200)
     {

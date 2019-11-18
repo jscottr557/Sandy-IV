@@ -2,7 +2,7 @@
 
 using namespace pros;
 
-//CLear the encoder on the intake motors, set it to brake
+//Clear the encoder on the intake motors, set them to brake
 void initIntake();
 
 //Set the intake to intake or outtake at full power, or turn off
