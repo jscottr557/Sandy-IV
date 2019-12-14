@@ -39,7 +39,7 @@ void opcontrol()
 		delay(20);
 		if(controller.get_digital(DIGITAL_Y) && controller.get_digital(DIGITAL_A))
 		{
-			decideAuton(getSelVal());
+			/*decideAuton(getSelVal())*/driveInches(24, "forward");
 		}
 	}
 }

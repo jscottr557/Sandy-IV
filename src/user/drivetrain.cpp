@@ -1,18 +1,10 @@
 #include "user/drivetrain.hpp"
 
-Motor FR(1, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
-Motor FL(2, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
-Motor BR(3, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
-Motor BL(4, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
-Motor strafe(5, E_MOTOR_GEARSET_36, 0, E_MOTOR_ENCODER_DEGREES);
+Motor FR(20, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
+Motor FL(19, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
+Motor BR(11, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
+Motor BL(12, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
 
-struct driveConstants
-{
-  double velocKp;
-  double alignKp;
-  double turnKp;
-  double SLEW;
-};
 
 void initDrivetrain(std::string brakeMode)
 {
@@ -22,7 +14,6 @@ void initDrivetrain(std::string brakeMode)
     FL.set_brake_mode(E_MOTOR_BRAKE_COAST);
     BR.set_brake_mode(E_MOTOR_BRAKE_COAST);
     BL.set_brake_mode(E_MOTOR_BRAKE_COAST);
-    strafe.set_brake_mode(E_MOTOR_BRAKE_COAST);
   }
   else if(brakeMode == "brake")
   {
@@ -30,7 +21,6 @@ void initDrivetrain(std::string brakeMode)
     FL.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
     BR.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
     BL.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
-    strafe.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
   }
   else if(brakeMode == "hold")
   {
@@ -38,13 +28,11 @@ void initDrivetrain(std::string brakeMode)
     FL.set_brake_mode(E_MOTOR_BRAKE_HOLD);
     BR.set_brake_mode(E_MOTOR_BRAKE_HOLD);
     BL.set_brake_mode(E_MOTOR_BRAKE_HOLD);
-    strafe.set_brake_mode(E_MOTOR_BRAKE_HOLD);
   }
   FR.tare_position();
   FL.tare_position();
   BR.tare_position();
   BL.tare_position();
-  strafe.tare_position();
   return;
 }
 
@@ -61,7 +49,6 @@ int getAvgDriveSideTicks(char side)
   }
   return avg;
 }
-
 
 void setDriveSidePower(int power, char side)
 {
@@ -99,7 +86,6 @@ void stopAll()
   FL.move_velocity(0);
   BR.move_velocity(0);
   BL.move_velocity(0);
-  strafe.move_velocity(0);
   return;
 }
 
@@ -129,11 +115,13 @@ void driveInches(int inches, std::string direction)
   float currentPower = 0;
   float lPower = 0;
   float rPower = 0;
+  float iPower = 0;
   float distErr = 0;
   float alignErr = 0;
-  float distKp = 0.15;
+  float distKp = 0.5;
+  float distKi = .000005;
   float alignKp = 0.15;
-  const float SLEW = .35;//AKA the acceleration in rpm/cycle
+  const float SLEW = .003;//AKA the acceleration in rpm/cycle ***SHOULD BE .003***
   while(avgTicks < target)
   {
     lAvgTicks = abs(getAvgDriveSideTicks('l'));
@@ -148,9 +136,11 @@ void driveInches(int inches, std::string direction)
     }
 
     //Decide wether to accelerate or decelerate
-    if(currentPower > (target - avgTicks))
+    if(currentPower * 3.5 > (target - avgTicks))
     {
-      distErr = distErr * -1;
+      //iPower += (target - avgTicks) * distKi;
+      distErr = (distErr * -1) + iPower;
+
     }
 
     //Decide which side is too far ahead, apply alignment and speed corretions
@@ -202,7 +192,7 @@ void driveInches(int inches, std::string direction)
 void turnDegrees(int degrees, std::string direction)
 {
   initDrivetrain("brake");
-  int target = degrees * 0;//Ticks per degree
+  float target = degrees * 2.49;//Ticks per degree
   int lAvgTicks = 0;
   int rAvgTicks = 0;
   int avgTicks = 0;
@@ -213,7 +203,7 @@ void turnDegrees(int degrees, std::string direction)
   float alignErr = 0;
   float distKp = .15;
   float alignKp = .15;
-  const float SLEW = .35;
+  const float SLEW = .20;
   while(avgTicks < target)
   {
     lAvgTicks = abs(getAvgDriveSideTicks('l'));
