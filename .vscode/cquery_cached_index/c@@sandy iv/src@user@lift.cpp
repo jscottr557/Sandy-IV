@@ -10,15 +10,14 @@ void initLift()
   lift.set_brake_mode(E_MOTOR_BRAKE_HOLD);
 }
 
-int getAvgLiftPos()
+int getLiftPos()
 {
-  return /*(fabs(//lift.get_position()) +*/ fabs(lift.get_position());//)/2;
+  return lift.get_position();
 }
 
 void moveLiftPower(int power)
 {
   lift.move(power);
-  //lift.move(power);
 }
 
 void controlLift(Controller controller)
@@ -49,7 +48,7 @@ void moveLiftTo(int pos)
 
   while(avgPos != pos)
   {
-    avgPos = getAvgLiftPos();
+    avgPos = getLiftPos();//avglift
     distErr = pos - avgPos;
 
     power = distErr;

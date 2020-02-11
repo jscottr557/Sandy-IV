@@ -6,7 +6,7 @@ using namespace pros;
 void initLift();
 
 //Get the average position of the lift motor encoder
-int getAvgLiftPos();
+int getLiftPos();
 
 //Set the arbitrary "power" of both of the lift motors
 //Args for power are -127 to 127

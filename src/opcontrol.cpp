@@ -31,15 +31,16 @@ void opcontrol()
 
 	while(1)
 	{
-		lcd::print(1, "%d", getSelVal());
+		//lcd::print(1, "Lift pos: %d", getLiftPos());
+		lcd::print(1, "AutonSel: %d", getSelVal());
 		controlDrivetrain(controller);
 		controlLift(controller);
 		controlIntake(controller);
 		controlTray(controller);
 		delay(20);
-		if(controller.get_digital(DIGITAL_Y) && controller.get_digital(DIGITAL_A))
+		if(controller.get_digital(DIGITAL_Y) && controller.get_digital(DIGITAL_A) && controller.get_digital(DIGITAL_LEFT) && controller.get_digital(DIGITAL_RIGHT))
 		{
-			/*decideAuton(getSelVal())*/driveInches(24, "forward");
+			decideAuton(getSelVal());//driveInches(24, "forward");
 		}
 	}
 }

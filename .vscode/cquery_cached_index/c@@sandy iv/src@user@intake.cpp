@@ -1,4 +1,5 @@
 #include "user/intake.hpp"
+#include "user/lift.hpp"
 
 Motor intakeL(1, E_MOTOR_GEARSET_18, 1, E_MOTOR_ENCODER_DEGREES);
 Motor intakeR(2, E_MOTOR_GEARSET_18, 0, E_MOTOR_ENCODER_DEGREES);
@@ -33,7 +34,11 @@ void setIntake(std::string state)
 
 void controlIntake(Controller controller)
 {
-  if(controller.get_digital(E_CONTROLLER_DIGITAL_L1))
+  if((controller.get_digital(E_CONTROLLER_DIGITAL_L1) || controller.get_digital(E_CONTROLLER_DIGITAL_L2)) && (getLiftPos() > 500))
+  {
+    setIntake("out");
+  }
+  else if(controller.get_digital(E_CONTROLLER_DIGITAL_L1))
   {
     setIntake("out");
   }

@@ -115,13 +115,11 @@ void driveInches(int inches, std::string direction)
   float currentPower = 0;
   float lPower = 0;
   float rPower = 0;
-  float iPower = 0;
   float distErr = 0;
   float alignErr = 0;
-  float distKp = 0.5;
-  float distKi = .000005;
+  float distKp = 0.15;
   float alignKp = 0.15;
-  const float SLEW = .003;//AKA the acceleration in rpm/cycle ***SHOULD BE .003***
+  const float SLEW = .003;//AKA the acceleration in rpm/cycle
   while(avgTicks < target)
   {
     lAvgTicks = abs(getAvgDriveSideTicks('l'));
@@ -138,9 +136,11 @@ void driveInches(int inches, std::string direction)
     //Decide wether to accelerate or decelerate
     if(currentPower * 3.5 > (target - avgTicks))
     {
-      //iPower += (target - avgTicks) * distKi;
-      distErr = (distErr * -1) + iPower;
-
+      distErr = distErr * -1;
+      if(currentPower < 5)
+      {
+        distErr = 5 - currentPower;
+      }
     }
 
     //Decide which side is too far ahead, apply alignment and speed corretions
@@ -203,7 +203,7 @@ void turnDegrees(int degrees, std::string direction)
   float alignErr = 0;
   float distKp = .15;
   float alignKp = .15;
-  const float SLEW = .20;
+  const float SLEW = .003;
   while(avgTicks < target)
   {
     lAvgTicks = abs(getAvgDriveSideTicks('l'));
@@ -221,6 +221,10 @@ void turnDegrees(int degrees, std::string direction)
     if(currentPower > (target - avgTicks))
     {
       distErr = distErr * -1;
+      if(currentPower < 5)
+      {
+        distErr = 5 - currentPower;
+      }
     }
 
     //Decide which side is too far ahead, apply alignment and speed corretions

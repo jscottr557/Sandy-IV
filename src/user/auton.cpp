@@ -17,7 +17,7 @@ void autonBlue()
   //setIntake("out");
   delay(200);
   setIntake("out");
-  delay(500);
+  delay(700);
   driveInches(30, "backward");
 
   /*Experimental
@@ -35,6 +35,24 @@ void autonBlue()
     delay(200);
     driveInches(20, "backward");
   */
+}
+
+void autonSkillsB()
+{
+  driveInches(24, "forward");
+  //setIntake("out");
+  delay(200);
+  setIntake("out");
+  delay(400);
+  setDriveSideVel(-100, 'r');
+  setDriveSideVel(-100, 'l');
+  delay(500);
+  setDriveSideVel(0, 'r');
+  setDriveSideVel(0, 'l');
+
+}
+void autonSkillsR()
+{
 
 }
 
@@ -46,11 +64,11 @@ void decideAuton(int autonSel)
   }
   else if(autonSel >= 1000 && autonSel < 2000)
   {
-    autonBlue();
+    autonSkillsB();
   }
   else if(autonSel >= 2000 && autonSel < 3000)
   {
-    autonRed();
+    autonSkillsR();
   }
   else if(autonSel >= 3000 && autonSel <= 4095)
   {
