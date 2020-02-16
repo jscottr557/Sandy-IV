@@ -23,10 +23,11 @@ void setTrayPower(int power)
 
 void moveTrayTo(int pos)
 {
+  lcd::print(2, "trayPos: %d", getTrayPos());
   int err = 0;
   while(getTrayPos() != pos)
   {
-    err = pos - getTrayPos();
+    err = (pos - getTrayPos());
     tray.move_velocity(err);
   }
   return;

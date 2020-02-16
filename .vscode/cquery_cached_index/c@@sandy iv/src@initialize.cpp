@@ -13,7 +13,14 @@ void initialize() {}
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {}
+void disabled()
+{
+  lcd::print(0, "AutonSel: %d", getSelVal());
+  lcd::print(1, "TrayPos: %d", getLiftPos());
+  lcd::print(2, "LiftPos: %d", getTrayPos());
+  lcd::print(3, "RightDrivePos: %d", getAvgDriveSideTicks('r'));
+  lcd::print(4, "LeftDrivePos: %d", getAvgDriveSideTicks('l'));
+}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -24,4 +31,11 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize()
+{
+  lcd::print(0, "AutonSel: %d", getSelVal());
+  lcd::print(1, "TrayPos: %d", getLiftPos());
+  lcd::print(2, "LiftPos: %d", getTrayPos());
+  lcd::print(3, "RightDrivePos: %d", getAvgDriveSideTicks('r'));
+  lcd::print(4, "LeftDrivePos: %d", getAvgDriveSideTicks('l'));
+}

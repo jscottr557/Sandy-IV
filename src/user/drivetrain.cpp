@@ -189,10 +189,66 @@ void driveInches(int inches, std::string direction)
   return;
 }
 
+void driveVelTime(int vel, int ms)
+{
+  setDriveSideVel(vel, 'l');
+  setDriveSideVel(vel, 'r');
+  delay(ms);
+  stopAll();
+}
+
+void driveInchesVel(int inches, int vel, std::string direction)
+{
+  initDrivetrain("coast");
+  int target = (inches / (4 * M_PI)) * 360;
+  int lAvgTicks = 0;
+  int rAvgTicks = 0;
+  int avgTicks = 0;
+  float lPower = 0;
+  float rPower = 0;
+  float alignErr = 0;
+  float alignKp = 0.15;
+  while(avgTicks < target)
+  {
+    lAvgTicks = abs(getAvgDriveSideTicks('l'));
+    rAvgTicks = abs(getAvgDriveSideTicks('r'));
+    avgTicks = (lAvgTicks + rAvgTicks) / 2;
+
+    //Decide which side is too far ahead, apply alignment and speed corretions
+    if(lAvgTicks > rAvgTicks)
+    {
+      lPower = vel - alignErr;
+      rPower = vel;
+    }
+    else if(rAvgTicks > lAvgTicks)
+    {
+      rPower = vel - alignErr;
+      lPower = vel;
+    }
+    else
+    {
+      lPower = vel;
+      rPower = vel;
+    }
+
+    if(direction == "backward")
+    {
+      lPower = lPower * -1;
+      rPower = rPower * -1;
+    }
+
+    //Send velocity targets to both sides of the drivetrain
+    setDriveSideVel(lPower, 'l');
+    setDriveSideVel(rPower, 'r');
+  }
+  stopAll();
+  return;
+}
+
 void turnDegrees(int degrees, std::string direction)
 {
   initDrivetrain("brake");
-  float target = degrees * 2.49;//Ticks per degree
+  float target = degrees * 2.94;//Ticks per degree
   int lAvgTicks = 0;
   int rAvgTicks = 0;
   int avgTicks = 0;
@@ -203,7 +259,7 @@ void turnDegrees(int degrees, std::string direction)
   float alignErr = 0;
   float distKp = .15;
   float alignKp = .15;
-  const float SLEW = .003;
+  const float SLEW = .00175;
   while(avgTicks < target)
   {
     lAvgTicks = abs(getAvgDriveSideTicks('l'));
@@ -218,7 +274,7 @@ void turnDegrees(int degrees, std::string direction)
     }
 
     //Decide wether to accelerate or decelerate
-    if(currentPower > (target - avgTicks))
+    if(currentPower * 2.75 > (target - avgTicks))
     {
       distErr = distErr * -1;
       if(currentPower < 5)

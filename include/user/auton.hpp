@@ -1,10 +1,17 @@
 #include "api.h"
 
 //The set of commands for auton on the red side
-void autonRed();
+void autonRed5();
+
+void autonRed3();
 
 //The set of commands for auton on the blue side
-void autonBlue();
+void autonBlue5();
+
+void autonBlue3();
+
+//The set of commands for the bump autonomous
+void autonBump();
 
 //The set of commands for auton during a skills run
 void autonSkills();

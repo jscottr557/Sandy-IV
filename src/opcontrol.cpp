@@ -32,15 +32,20 @@ void opcontrol()
 	while(1)
 	{
 		//lcd::print(1, "Lift pos: %d", getLiftPos());
-		lcd::print(1, "AutonSel: %d", getSelVal());
+		lcd::print(0, "AutonSel: %d", getSelVal());
+		lcd::print(1, "TrayPos: %d", getLiftPos());
+		lcd::print(2, "LiftPos: %d", getTrayPos());
+		lcd::print(3, "RightDrivePos: %d", getAvgDriveSideTicks('r'));
+		lcd::print(4, "LeftDrivePos: %d", getAvgDriveSideTicks('l'));
 		controlDrivetrain(controller);
 		controlLift(controller);
 		controlIntake(controller);
 		controlTray(controller);
-		delay(20);
 		if(controller.get_digital(DIGITAL_Y) && controller.get_digital(DIGITAL_A) && controller.get_digital(DIGITAL_LEFT) && controller.get_digital(DIGITAL_RIGHT))
 		{
-			decideAuton(getSelVal());//driveInches(24, "forward");
+			autonRed3();
+			initDrivetrain("coast");
 		}
+		delay(20);
 	}
 }

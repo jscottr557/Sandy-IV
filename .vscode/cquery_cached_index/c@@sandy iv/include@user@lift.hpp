@@ -5,7 +5,7 @@ using namespace pros;
 //Clear the encoder on the lift motor, set it to hold its position
 void initLift();
 
-//Get the average position of the lift motor encoder
+//Get the position of the lift motor encoder
 int getLiftPos();
 
 //Set the arbitrary "power" of both of the lift motors

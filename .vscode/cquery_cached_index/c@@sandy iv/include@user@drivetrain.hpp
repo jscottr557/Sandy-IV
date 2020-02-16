@@ -28,6 +28,14 @@ void controlDrivetrain(Controller controller);
 //Args for direction are "forward" and "backward"
 void driveInches(int inches, std::string direction);
 
+//Move the drivetrain forward or back at a velocity for a number of miliseconds
+//Args for vel are from -200 to 200, ms is the number of miliseconds to drive for
+void driveVelTime(int vel, int ms);
+
+//Move the drivetrain forward or backwards a number of inches at a given velocity
+//Args for vel are from -200 to 200
+void driveInchesVel(int inches, int vel, std::string direction);
+
 //Turn the drivetrain a number of turnDegrees
 //Args for direction are "left" with a lowercase "l", and "right"
 void turnDegrees(int degrees, std::string direction);
