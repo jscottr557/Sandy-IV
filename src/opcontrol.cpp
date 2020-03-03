@@ -17,30 +17,34 @@ using namespace pros;
  */
 void opcontrol()
 {
-	//Initilize the subsystems
+	//Initilize the subsystems.
 	initDrivetrain("coast");
 	initLift();
 	initTray();
 	initIntake();
 
-	//Initilize the LCD emulator
+	//Initilize the LCD emulator.
 	lcd::initialize();
 
-	//Initilize the controller
+	//Initilize the controller.
 	Controller controller(E_CONTROLLER_MASTER);
 
 	while(1)
 	{
-		//lcd::print(1, "Lift pos: %d", getLiftPos());
+		//Display debugging and subsystem postiton information.
 		lcd::print(0, "AutonSel: %d", getSelVal());
 		lcd::print(1, "TrayPos: %d", getLiftPos());
 		lcd::print(2, "LiftPos: %d", getTrayPos());
 		lcd::print(3, "RightDrivePos: %d", getAvgDriveSideTicks('r'));
 		lcd::print(4, "LeftDrivePos: %d", getAvgDriveSideTicks('l'));
+
+		//Calling usercontrol fucntions for the subsystems.
 		controlDrivetrain(controller);
 		controlLift(controller);
 		controlIntake(controller);
 		controlTray(controller);
+
+		//Tester for autonomous, made hard to trigger to prevent accidents during matches.
 		if(controller.get_digital(DIGITAL_Y) && controller.get_digital(DIGITAL_A) && controller.get_digital(DIGITAL_LEFT) && controller.get_digital(DIGITAL_RIGHT))
 		{
 			autonRed3();

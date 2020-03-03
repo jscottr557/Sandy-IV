@@ -2,7 +2,6 @@
 
 using namespace pros;
 
-
 /*Clears the IMES(Integrated motor encoders) on all of the drive motors, and
   sets how they brake, making all of the drivetrain ready for use.
 
@@ -35,7 +34,7 @@ int getAvgDriveSideTicks(char side);
     This number is more an indicator of scale than anything else, with numbers
     farther from 0 indicating more "power", and sign indicating direction.
     Valid arguments:
-      From -127 to 127(inclusive)
+      From -127 to 127(inclusive).
 
   \param side
     The side of the drivetrain to apply the "power" to
@@ -53,12 +52,12 @@ void setDriveSidePower(int power, char side);
   \param vel
     The target velocity in RPM.
     Valid arguments:
-      From -200 to 200(inclusive) for standard motor gearsets(green)
-      From -100 to 100(inclusive) for torque motor gearsets(red)
-      From -600 to 600(inclusive) for high-speed motor gearsets(blue)
+      From -200 to 200(inclusive) for standard motor gearsets(green).
+      From -100 to 100(inclusive) for torque motor gearsets(red).
+      From -600 to 600(inclusive) for high-speed motor gearsets(blue).
 
   \param side
-    The side of the drivetrain to apply the velocity target to
+    The side of the drivetrain to apply the velocity target to.
     Valid arguments:
       l
       r
@@ -66,7 +65,7 @@ void setDriveSidePower(int power, char side);
 void setDriveSideVel(int vel, char side);
 
 
-//Stops all of the motors on the drivetrain
+//Stops all of the motors on the drivetrain.
 void stopAllDrive();
 
 
@@ -92,12 +91,12 @@ void controlDrivetrain(Controller controller);
   \param joyY
     The current y(vertical axis) value of the chosen control joystick.
     Valid arguments:
-      TBD
+      Any value returned by a joystick axis from a V5 controller.
 
   \param joyX
     The current x(horizontal axis) value of the chosen control joystick.
     Valid arguments:
-      TBD
+      Any value returned by a joystick axis from a V5 controller.
 */
 void controlDrivetrain(int joyY, int joyX);
 
@@ -111,12 +110,12 @@ void controlDrivetrain(int joyY, int joyX);
   to guanantee proper function.
 
   \param inches
-    The number of inches to drive
+    The number of inches to drive.
     Valid arguments:
-      Any integer greater than 0
+      Any integer greater than 0.
 
   \param direction
-    Which direction to drive
+    Which direction to drive.
     Valid arguments:
       forward
       backward
@@ -133,19 +132,19 @@ void driveInches(int inches, std::string direction);
   target, and is not guananteed to be accurate.
 
   \param inches
-    The number of inches to drive
+    The number of inches to drive.
     Valid arguments:
-      Any integer greater than 0
+      Any integer greater than 0.
 
   \param vel
     The target velocity for the drivetrain to maintain while it is moving.
     Valid arguments:
-      From 0 to 200(inclusive) for standard motor gearsets(green)
-      From 0 to 100(inclusive) for torque motor gearsets(red)
-      From 0 to 600(inclusive) for high-speed motor gearsets(blue)
+      From 0 to 200(inclusive) for standard motor gearsets(green).
+      From 0 to 100(inclusive) for torque motor gearsets(red).
+      From 0 to 600(inclusive) for high-speed motor gearsets(blue).
 
   \param direction
-    Which direction to drive
+    Which direction to drive.
     Valid arguments:
       forward
       backward
@@ -163,12 +162,12 @@ void driveInchesVel(int inches, int vel, std::string direction);
   target, and is not guananteed to be accurate.
 
   \param degrees
-    The number of degrees to turn
+    The number of degrees to turn.
     Valid arguments:
       Any integer greater than 0
 
   \param direction
-    Which direction to drive
+    Which direction to drive.
     Valid arguments:
       right
       left

@@ -1,6 +1,5 @@
 #include "api.h"
 
-
 /*The set of commands for the 5 cube auton on the red side.
 
   Rough desription of this auton:
@@ -87,8 +86,5 @@ void autonSkills();
     (generally) The return value of the potentiometer.
     Valid arguments:
       From 0 - 4095(inclusive)
-
-  \Return 1 if the value passed as autonSel was valid.
-  \Return 0 if the value passed as autonSel was out of range.
 */
 void decideAuton(int autonSel);
