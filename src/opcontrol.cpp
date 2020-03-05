@@ -47,7 +47,7 @@ void opcontrol()
 		//Tester for autonomous, made hard to trigger to prevent accidents during matches.
 		if(controller.get_digital(DIGITAL_Y) && controller.get_digital(DIGITAL_A) && controller.get_digital(DIGITAL_LEFT) && controller.get_digital(DIGITAL_RIGHT))
 		{
-			autonRed3();
+			autonRed5Prot();
 			initDrivetrain("coast");
 		}
 		delay(20);

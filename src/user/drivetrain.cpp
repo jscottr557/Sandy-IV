@@ -266,12 +266,12 @@ void driveInchesVel(int inches, int vel, std::string direction)
   return;
 }
 
-void turnDegrees(int degrees, std::string direction)
+/*void turnDegrees(int degrees, std::string direction)
 {
   initDrivetrain("brake");
-  const float botRadius = 0; //Radius in inches measured from center of robot to the point where wheels would be if they were a point.
+  const float botRadius = 6.125; //Radius in inches measured from center of robot to the point where wheels would be if they were a point.
   const int wheelDiam = 4;//Should be set to the diameter of your drive wheels in inches.
-  const float arcInches = (degrees / 360) * (M_PI * 2 * botRadius);
+  const float arcInches = (degrees / 360.0) * (M_PI * 2 * botRadius);
   const float target = (arcInches / (M_PI * wheelDiam)) * 360;
   int lAvgTicks = 0;
   int rAvgTicks = 0;
@@ -341,7 +341,7 @@ void turnDegrees(int degrees, std::string direction)
 
     //Set current power for next cycle, make sure it doesn't get too high/low
     /*As a side note, the distance(in ticks) at which deceleration starts is
-      determined by the upper limit on currentPower's and kDecel's product.*/
+      determined by the upper limit on currentPower's and kDecel's product.
     currentPower = currentPower + distErr;
     if(currentPower > 200)
     {
@@ -354,13 +354,13 @@ void turnDegrees(int degrees, std::string direction)
   }
   stopAll();
   return;
-}
+}*/
 
 //KEEP ME AS EMERGENCY BACKUP, SHOULD BE MOSTLY TUNED ALREADY
-/*void turnDegrees(int degrees, std::string direction)
+void turnDegrees(int degrees, std::string direction)
 {
   initDrivetrain("brake");
-  float target = degrees * 2.94;//Ticks per degree
+  float target = degrees * 2.98;//2.94;//Ticks per degree
   int lAvgTicks = 0;
   int rAvgTicks = 0;
   int avgTicks = 0;
@@ -389,9 +389,9 @@ void turnDegrees(int degrees, std::string direction)
     if(currentPower * 2.75 > (target - avgTicks))
     {
       distErr = distErr * -1;
-      if(currentPower < 5)
+      if(currentPower < 10)
       {
-        distErr = 5 - currentPower;
+        distErr = 10 - currentPower;
       }
     }
 
@@ -429,7 +429,7 @@ void turnDegrees(int degrees, std::string direction)
 
     //Set current power for next cycle, make sure it doesn't get too high/low
     /*As a side note, the distance(in ticks) at which deceleration starts is
-      determined by the upper limit on currentPower
+      determined by the upper limit on currentPower*/
     currentPower = currentPower + distErr;
     if(currentPower > 200)
     {
@@ -442,4 +442,4 @@ void turnDegrees(int degrees, std::string direction)
   }
   stopAll();
   return;
-}*/
+}

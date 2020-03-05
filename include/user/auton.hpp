@@ -13,6 +13,9 @@
 void autonRed5();
 
 
+void autonRed5Prot();
+
+
 /*The set of commands for the 3 cube auton on the red side.
 
   Rough description of this auton:

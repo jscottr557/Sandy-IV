@@ -22,6 +22,22 @@ void autonRed5()
   setIntake("stop");
 }
 
+void autonRed5Prot()
+{
+  setIntake("in");
+  driveInchesVel(21, 60, "forward");
+  delay(750);
+  turnDegrees(90, "right");
+  driveInchesVel(9, 80, "forward");
+  delay(200);
+  driveInchesVel(7, 80, "backward");
+  delay(200);
+  turnDegrees(176, "left");
+  delay(100);
+  driveInches(16, "forward");
+  turnDegrees(45, "left");
+}
+
 void autonRed3()
 {
   setIntake("in");
